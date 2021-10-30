@@ -5,7 +5,7 @@ const BAD_REQUEST = 400;
 const NOT_FOUND = 404;
 const TALKER_NOT_FOUND = 'Pessoa palestrante não encontrada';
 
-const getAllTalkers = async (req, res) => {
+const getAllTalkers = async (_req, res) => {
   try {
     const allTalkers = await fs.readFile('./talker.json', 'utf8');
     if (!allTalkers) return res.status(HTTP_OK_STATUS).json([]);
@@ -28,4 +28,7 @@ const getTalkerById = async (req, res) => {
   }
 };
 
-module.exports = { getAllTalkers, getTalkerById };
+module.exports = {
+  getAllTalkers,
+  getTalkerById,
+};
