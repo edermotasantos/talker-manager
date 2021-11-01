@@ -9,7 +9,7 @@ const emailIsValid = (req, res, next) => {
   const { email } = req.body;
   if (!email) return res.status(BAD_REQUEST).send({ message: EMAIL_IS_REQUIRED });
   if (!(email.includes('@') && email.includes('.com'))) {
-      return res.status(BAD_REQUEST).send({ message: INVALID_EMAIL });
+    return res.status(BAD_REQUEST).send({ message: INVALID_EMAIL });
   }
   next();
 };
