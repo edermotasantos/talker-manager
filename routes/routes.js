@@ -1,9 +1,7 @@
 const fs = require('fs').promises;
 const express = require('express');
 const token = require('../middlewares/token');
-
-const CREATED = 201;
-const HTTP_OK_STATUS = 200;
+const { CREATED, HTTP_OK_STATUS } = require('../middlewares/messages'); 
 
 const router = express.Router();
 
@@ -24,6 +22,7 @@ const {
   validRate,
   validTalk,
   validDate,
+  deleteTalker,
 } = require('../middlewares/validateTalker');
 
 router.get('/talker', getAllTalkers);
@@ -46,11 +45,11 @@ router.post('/talker',
   async (req, res) => {
     const { name, age, talk: { watchedAt, rate } } = req.body;
     const talkersStringJson = await fs.readFile('./talker.json', 'utf-8');
-    const talkerObj = JSON.parse(talkersStringJson);
-    const id = talkerObj.length + 1;
+    const talkerArray = JSON.parse(talkersStringJson);
+    const id = talkerArray.length + 1;
     const newTalker = { name, age, id, talk: { watchedAt, rate } };
-    talkerObj.push(newTalker);
-    const newtalker = JSON.stringify(talkerObj);
+    talkerArray.push(newTalker);
+    const newtalker = JSON.stringify(talkerArray);
     await fs.writeFile('./talker.json', newtalker);
     return res.status(CREATED).json(newTalker);
   });
@@ -66,15 +65,23 @@ router.put('/talker/:id',
     const { id } = req.params;
     const { name, age, talk: { watchedAt, rate } } = req.body;
     const talkerStrgJsn = await fs.readFile('./talker.json', 'utf-8');
-    const talkerObj = JSON.parse(talkerStrgJsn);
-    const indexId = talkerObj.findIndex((talker) => talker.id === Number(id));
-    talkerObj[indexId] = { 
-      ...talkerObj[indexId], name, age, talk: { watchedAt, rate },
+    const talkerArray = JSON.parse(talkerStrgJsn);
+    const indexId = talkerArray.findIndex((talker) => talker.id === Number(id));
+    talkerArray[indexId] = { 
+      ...talkerArray[indexId],
+      name,
+      age,
+      talk: {
+        watchedAt,
+        rate,
+      },
     };
-    const nuTalker = talkerObj[indexId];
-    const talkerStringfy = JSON.stringify(talkerObj);
+    const nuTalker = talkerArray[indexId];
+    const talkerStringfy = JSON.stringify(talkerArray);
     await fs.writeFile('./talker.json', talkerStringfy);
     return res.status(200).json(nuTalker);
   });
+
+  router.delete('/talker/:id', tokenValidation, deleteTalker);
 
 module.exports = router;
