@@ -3,6 +3,7 @@ const express = require('express');
 const token = require('../middlewares/token');
 
 const CREATED = 201;
+const HTTP_OK_STATUS = 200;
 
 const router = express.Router();
 
@@ -20,11 +21,10 @@ const {
   tokenValidation,
   validName,
   validAge,
-  validTalk,
   validRate,
+  validTalk,
+  validDate,
 } = require('../middlewares/validateTalker');
-
-const HTTP_OK_STATUS = 200;
 
 router.get('/talker', getAllTalkers);
 router.get('/talker/:id', getTalkerById);
@@ -40,18 +40,41 @@ router.post('/talker',
   tokenValidation,
   validName,
   validAge,
-  validTalk,
   validRate,
+  validTalk,
+  validDate,
   async (req, res) => {
     const { name, age, talk: { watchedAt, rate } } = req.body;
     const talkersStringJson = await fs.readFile('./talker.json', 'utf-8');
-    const talkersObj = JSON.parse(talkersStringJson);
-    const id = talkersObj.length + 1;
+    const talkerObj = JSON.parse(talkersStringJson);
+    const id = talkerObj.length + 1;
     const newTalker = { name, age, id, talk: { watchedAt, rate } };
-    talkersObj.push(newTalker);
-    const newtalker = JSON.stringify(talkersObj);
+    talkerObj.push(newTalker);
+    const newtalker = JSON.stringify(talkerObj);
     await fs.writeFile('./talker.json', newtalker);
     return res.status(CREATED).json(newTalker);
+  });
+
+router.put('/talker/:id',
+  tokenValidation,
+  validName,
+  validAge,
+  validRate,
+  validTalk,
+  validDate,
+  async (req, res) => {
+    const { id } = req.params;
+    const { name, age, talk: { watchedAt, rate } } = req.body;
+    const talkerStrgJsn = await fs.readFile('./talker.json', 'utf-8');
+    const talkerObj = JSON.parse(talkerStrgJsn);
+    const indexId = talkerObj.findIndex((talker) => talker.id === Number(id));
+    talkerObj[indexId] = { 
+      ...talkerObj[indexId], name, age, talk: { watchedAt, rate },
+    };
+    const nuTalker = talkerObj[indexId];
+    const talkerStringfy = JSON.stringify(talkerObj);
+    await fs.writeFile('./talker.json', talkerStringfy);
+    return res.status(200).json(nuTalker);
   });
 
 module.exports = router;

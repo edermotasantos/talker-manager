@@ -8,7 +8,7 @@ const NAME_IS_REQUIRED = 'O campo "name" é obrigatório';
 const INVALID_NAME = 'O "name" deve ter pelo menos 3 caracteres';
 const AGE_IS_REQUIRED = 'O campo "age" é obrigatório';
 const INVALID_AGE = 'A pessoa palestrante deve ser maior de idade';
-const VALID_DATE = /^[\d]{2}\/[\d]{2}\/[\d]{4}$/;
+const VALID_DATE_FORMAT = /^[\d]{2}\/[\d]{2}\/[\d]{4}$/;
 const INVALID_FORMAT = 'O campo "watchedAt" deve ter o formato "dd/mm/aaaa"';
 const INVALID_RATE = 'O campo "rate" deve ser um inteiro de 1 à 5';
 const TALK_IS_REQUIRED = 'O campo "talk" é obrigatório e "watchedAt" e "rate" não podem ser vazios';
@@ -39,6 +39,16 @@ const validAge = (req, res, next) => {
  * Link do repositório: https://github.com/tryber/sd-011-project-talker-manager/pull/7/commits/2fd249c5dd756ff0d3d65d4f28b2f64351c58636
  */
 
+const validRate = (req, res, next) => {
+  const { talk } = req.body;
+  if (talk && (talk.rate < 1 || talk.rate > 5)) {
+    return res.status(BAD_REQUEST).send({
+      message: INVALID_RATE,
+    });
+  }
+  next();
+};
+
 const validTalk = (req, res, next) => {
   const { talk } = req.body;
   if (!talk || !talk.watchedAt || !talk.rate) {
@@ -46,18 +56,13 @@ const validTalk = (req, res, next) => {
       message: TALK_IS_REQUIRED,
     });
   }
-  if (!VALID_DATE.test(talk.watchedAt)) {
-    return res.status(BAD_REQUEST).send({ message: INVALID_FORMAT });
-  }
   next();
 };
 
-const validRate = (req, res, next) => {
+const validDate = (req, res, next) => {
   const { talk } = req.body;
-  if (talk.rate < 1 || talk.rate > 5) {
-    return res.status(BAD_REQUEST).send({
-      message: INVALID_RATE,
-    });
+  if (!VALID_DATE_FORMAT.test(talk.watchedAt)) {
+    return res.status(BAD_REQUEST).send({ message: INVALID_FORMAT });
   }
   next();
 };
@@ -66,6 +71,7 @@ module.exports = {
   tokenValidation,
   validName,
   validAge,
-  validTalk,
   validRate,
+  validTalk,
+  validDate,
 }; 
