@@ -2,7 +2,6 @@ const fs = require('fs').promises;
 const token = require('./token');
 
 const {
-  HTTP_OK_STATUS,
   BAD_REQUEST,
   UNAUTHORIZED,
   INVALID_TOKEN,
@@ -15,7 +14,6 @@ const {
   INVALID_FORMAT,
   INVALID_RATE,
   TALK_IS_REQUIRED,
-  TALKER_WAS_DELETED,
 } = require('./messages');
 
 const tokenValidation = (req, res, next) => {
@@ -72,24 +70,6 @@ const validDate = (req, res, next) => {
   next();
 };
 
-const deleteTalker = async (req, res) => {
-  const { id } = req.params;
-  const talkerJsn = await fs.readFile('./talker.json', 'utf-8');
-  const talker = JSON.parse(talkerJsn);
-  const response = talker.find((value) => value.id !== Number(id));
-  const responseJsn = JSON.stringify(response);
-  await fs.writeFile('./talker.json', responseJsn);
-  res.status(HTTP_OK_STATUS).send({ message: TALKER_WAS_DELETED });
-};
-
-const searchTalker = async (req, res) => {
-  const { q } = req.query;
-  const talkersJson = await fs.readFile('./talker.json', 'utf-8');
-  const talkers = JSON.parse(talkersJson);
-  const response = talkers.filter(({ name }) => name.includes(q));
-  return res.status(HTTP_OK_STATUS).json(response);
-};
-
 module.exports = {
   tokenValidation,
   validName,
@@ -97,6 +77,4 @@ module.exports = {
   validRate,
   validTalk,
   validDate,
-  deleteTalker,
-  searchTalker,
 };

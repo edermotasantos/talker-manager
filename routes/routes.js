@@ -11,9 +11,9 @@ const {
 } = require('../middlewares/talkers');
 
 const {
-    emailIsValid,
-    passwordIsValid,  
-  } = require('../middlewares/login');
+  emailIsValid,
+  passwordIsValid,  
+} = require('../middlewares/login');
 
 const {
   tokenValidation,
@@ -22,9 +22,10 @@ const {
   validRate,
   validTalk,
   validDate,
-  deleteTalker,
-  searchTalker,
 } = require('../middlewares/validateTalker');
+
+const deleteTalker = require('../middlewares/deleteTalker');
+const searchTalker = require('../middlewares/searchTalker');
 
 router.get('/talker/search', tokenValidation, searchTalker);
 
