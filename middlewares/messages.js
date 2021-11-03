@@ -5,6 +5,10 @@ const UNAUTHORIZED = 401;
 const NOT_FOUND = 404;
 const PORT = '3000';
 const TALKER_NOT_FOUND = 'Pessoa palestrante não encontrada';
+const EMAIL_IS_REQUIRED = 'O campo "email" é obrigatório';
+const INVALID_EMAIL = 'O "email" deve ter o formato "email@email.com"';
+const PASSWORD_IS_REQUIRED = 'O campo "password" é obrigatório';
+const INVALID_PASSWORD = 'O "password" deve ter pelo menos 6 caracteres';
 const INVALID_TOKEN = 'Token inválido';
 const NOT_FOUND_TOKEN = 'Token não encontrado';
 const NAME_IS_REQUIRED = 'O campo "name" é obrigatório';
@@ -25,6 +29,10 @@ module.exports = {
   NOT_FOUND,
   PORT,
   TALKER_NOT_FOUND,
+  EMAIL_IS_REQUIRED,
+  INVALID_EMAIL,
+  PASSWORD_IS_REQUIRED,
+  INVALID_PASSWORD,
   INVALID_TOKEN,
   NOT_FOUND_TOKEN,
   NAME_IS_REQUIRED,

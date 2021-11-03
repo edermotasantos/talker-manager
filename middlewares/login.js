@@ -1,8 +1,10 @@
-const BAD_REQUEST = 400;
-const EMAIL_IS_REQUIRED = 'O campo "email" é obrigatório';
-const INVALID_EMAIL = 'O "email" deve ter o formato "email@email.com"';
-const PASSWORD_IS_REQUIRED = 'O campo "password" é obrigatório';
-const INVALID_PASSWORD = 'O "password" deve ter pelo menos 6 caracteres';
+const {
+  BAD_REQUEST,
+  EMAIL_IS_REQUIRED,
+  INVALID_EMAIL,
+  PASSWORD_IS_REQUIRED,
+  INVALID_PASSWORD,
+} = require('./messages');
 
 /** Source: https://github.com/tryber/sd-011-project-talker-manager/pull/7/commits/ae75ec13b617896272806d9c44bc51cf9777e1c6 */
 const emailIsValid = (req, res, next) => {
