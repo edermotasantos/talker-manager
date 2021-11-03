@@ -1,9 +1,6 @@
 const fs = require('fs').promises;
 
-const HTTP_OK_STATUS = 200;
-const BAD_REQUEST = 400;
-const NOT_FOUND = 404;
-const TALKER_NOT_FOUND = 'Pessoa palestrante não encontrada';
+const { HTTP_OK_STATUS, BAD_REQUEST, NOT_FOUND, TALKER_NOT_FOUND } = require('./messages');
 
 const getAllTalkers = async (_req, res) => {
   try {

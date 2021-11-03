@@ -2,7 +2,9 @@ const HTTP_OK_STATUS = 200;
 const CREATED = 201;
 const BAD_REQUEST = 400;
 const UNAUTHORIZED = 401;
+const NOT_FOUND = 404;
 const PORT = '3000';
+const TALKER_NOT_FOUND = 'Pessoa palestrante não encontrada';
 const INVALID_TOKEN = 'Token inválido';
 const NOT_FOUND_TOKEN = 'Token não encontrado';
 const NAME_IS_REQUIRED = 'O campo "name" é obrigatório';
@@ -20,7 +22,9 @@ module.exports = {
   CREATED,
   BAD_REQUEST,
   UNAUTHORIZED,
+  NOT_FOUND,
   PORT,
+  TALKER_NOT_FOUND,
   INVALID_TOKEN,
   NOT_FOUND_TOKEN,
   NAME_IS_REQUIRED,
