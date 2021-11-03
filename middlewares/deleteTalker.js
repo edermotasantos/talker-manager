@@ -1,4 +1,5 @@
 const fs = require('fs').promises;
+
 const { HTTP_OK_STATUS, TALKER_WAS_DELETED } = require('./messages');
 
 const deleteTalker = async (req, res) => {

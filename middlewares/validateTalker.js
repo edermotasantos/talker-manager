@@ -1,4 +1,3 @@
-const fs = require('fs').promises;
 const token = require('./token');
 
 const {
