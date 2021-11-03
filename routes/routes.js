@@ -23,7 +23,10 @@ const {
   validTalk,
   validDate,
   deleteTalker,
+  searchTalker,
 } = require('../middlewares/validateTalker');
+
+router.get('/talker/search', tokenValidation, searchTalker);
 
 router.get('/talker', getAllTalkers);
 router.get('/talker/:id', getTalkerById);
@@ -82,6 +85,6 @@ router.put('/talker/:id',
     return res.status(200).json(nuTalker);
   });
 
-  router.delete('/talker/:id', tokenValidation, deleteTalker);
+router.delete('/talker/:id', tokenValidation, deleteTalker);
 
 module.exports = router;
