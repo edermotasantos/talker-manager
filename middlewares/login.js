@@ -6,7 +6,6 @@ const {
   INVALID_PASSWORD,
 } = require('./messages');
 
-
 const emailIsValid = (req, res, next) => {
   const { email } = req.body;
   if (!email) return res.status(BAD_REQUEST).send({ message: EMAIL_IS_REQUIRED });

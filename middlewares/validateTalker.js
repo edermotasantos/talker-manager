@@ -36,8 +36,6 @@ const validAge = (req, res, next) => {
   next();
 };
 
-
-
 const validRate = (req, res, next) => {
   const { talk } = req.body;
   if (talk && (talk.rate < 1 || talk.rate > 5)) {
