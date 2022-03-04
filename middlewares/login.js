@@ -6,7 +6,7 @@ const {
   INVALID_PASSWORD,
 } = require('./messages');
 
-/** Source: https://github.com/tryber/sd-011-project-talker-manager/pull/7/commits/ae75ec13b617896272806d9c44bc51cf9777e1c6 */
+
 const emailIsValid = (req, res, next) => {
   const { email } = req.body;
   if (!email) return res.status(BAD_REQUEST).send({ message: EMAIL_IS_REQUIRED });

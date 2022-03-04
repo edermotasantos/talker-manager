@@ -36,10 +36,7 @@ const validAge = (req, res, next) => {
   next();
 };
 
-/**
- * Consultei o repositório do Julio Filizzola para resolver essa parte.
- * Link do repositório: https://github.com/tryber/sd-011-project-talker-manager/pull/7/commits/2fd249c5dd756ff0d3d65d4f28b2f64351c58636
- */
+
 
 const validRate = (req, res, next) => {
   const { talk } = req.body;
